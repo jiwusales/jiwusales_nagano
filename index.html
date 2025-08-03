@@ -547,8 +547,30 @@ function updateTabCount(sheetName) {
   }
 
   navBar.innerHTML = navItems.map(name => `<a href="#${name}">${name}</a>`).join("｜");
-}
 
+  // 下面是讓點擊連結切換 active 樣式的程式碼
+  navBar.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      navBar.querySelectorAll("a").forEach(el => el.classList.remove("active"));
+      a.classList.add("active");
+
+      // 滾動到對應區塊
+      const targetId = a.getAttribute("href").substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  // 預設第一個連結 active
+  const firstLink = navBar.querySelector("a");
+  if (firstLink) {
+    navBar.querySelectorAll("a").forEach(el => el.classList.remove("active"));
+    firstLink.classList.add("active");
+  }
+}
   
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
