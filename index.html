@@ -572,7 +572,7 @@ function renderCards(data, sheetName) {
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
-    groupContainer.className = "group-grid";  // 這行必須加，改用 CSS Grid 排版
+    groupContainer.className = "group-grid";
 
     grouped[type].forEach(item => {
       const card = document.createElement("div");
@@ -594,25 +594,6 @@ function renderCards(data, sheetName) {
         <div class="name">${formatName(item.name)}</div>
         <div class="size">${item.size}</div>
       `;
-
-      const checkmark = card.querySelector(".checkmark");
-      checkmark.style.display = collected.includes(item.name) ? "flex" : "none";
-
-      card.addEventListener("click", () => {
-        card.classList.toggle("collected");
-        const isCollected = card.classList.contains("collected");
-        if (isCollected) {
-          card.style.borderColor = colors[sheetName] || "#ccc";
-          checkmark.style.display = "flex";
-          if (!collected.includes(item.name)) collected.push(item.name);
-        } else {
-          card.style.borderColor = "#ccc";
-          checkmark.style.display = "none";
-          collected = collected.filter(n => n !== item.name);
-        }
-        localStorage.setItem("collectedDolls", JSON.stringify(collected));
-        updateTabCount(sheetName);
-      });
 
       groupContainer.appendChild(card);
     });
