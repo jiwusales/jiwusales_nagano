@@ -105,22 +105,19 @@ body {
   color: #333333;
   text-decoration: none;
   margin: 0 4px;
-  -webkit-tap-highlight-color: transparent; /* 取消點擊時手機高亮 */
   background-color: transparent;
 }
+
 .nav-bar a:focus,
 .nav-bar a:active {
   outline: none;
-  background-color: transparent; /* 取消點擊時灰底 */
+  background-color: transparent;
 }
- .nav-bar a.active {
+
+.nav-bar a.active {
   font-weight: bold;
-  color: #90ADC6;
-}
-.nav-link.active {
-  font-weight: bold;
-  color: var(--tab-color, #333333); /* 使用目前分頁顏色 */
-  text-decoration: none; /* ✅ 確保不會出現底線 */
+  color: #90ADC6 !important;
+  background-color: transparent;
 }
   
 .logo-container {
