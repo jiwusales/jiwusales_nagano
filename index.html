@@ -101,22 +101,11 @@ body {
   text-align: center;
   user-select: none;
   }
-.nav-bar a {
+.nav-bar a,
+.nav-link.active {
   color: #333333;
   text-decoration: none;
   margin: 0 4px;
-  -webkit-tap-highlight-color: transparent; /* 取消點擊時手機高亮 */
-  background-color: transparent;
-}
-  .nav-bar a:focus,
-.nav-bar a:active {
-  outline: none;
-  background-color: transparent; /* 取消點擊時灰底 */
-}
-
-.nav-bar a.active {
-  color: #90ADC6;
-  font-weight: bold;
 }
 
 .nav-link.active {
@@ -463,7 +452,7 @@ let collected = JSON.parse(localStorage.getItem("collectedDolls")) || [];
 const tabElements = {};
 let currentData = {};
 
-function formatName(name) {
+  function formatName(name) {
   if (!name) return "";
   const cleanName = name.trim();
   const totalLength = cleanName.length;
@@ -497,7 +486,7 @@ function createTab(sheetName) {
 }
 
 function updateTabCount(sheetName) {
-  if (sheetName === "重置圖鑑") return;
+  if (sheetName === "重置圖鑑") return; // 🚨 如果是重置按鈕，跳過更新
 
   const data = currentData[sheetName] || [];
   const ownedCount = data.filter(item => collected.includes(item.name)).length;
@@ -536,7 +525,7 @@ function updateTabCount(sheetName) {
   }
 }
 
-function updateNavBar(sheetName) {
+  function updateNavBar(sheetName) {
   const navBar = document.querySelector(".nav-bar");
   if (!navBar) return;
 
@@ -548,9 +537,10 @@ function updateNavBar(sheetName) {
     navItems = ["吊娃", "娃", "其他", "景品", "名創"];
   }
 
-  navBar.innerHTML = navItems.map((name, i) => `<a href="#${name}"${i === 0 ? ' class="active"' : ''}>${name}</a>`).join("｜");
+  navBar.innerHTML = navItems.map(name => `<a href="#${name}">${name}</a>`).join("｜");
 }
 
+  
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
   let grouped = {};
@@ -569,7 +559,7 @@ function renderCards(data, sheetName) {
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
-    groupContainer.className = "group-grid";
+    groupContainer.className = "group-grid";  // 這行必須加，改用 CSS Grid 排版
 
     grouped[type].forEach(item => {
       const card = document.createElement("div");
@@ -621,14 +611,13 @@ function renderCards(data, sheetName) {
 function loadSheetData(sheetName) {
   cardContainer.innerHTML = "載入中...";
   updateNavBar(sheetName);
-  setNavBarActiveByHash();
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
   fetch(url)
     .then(res => res.text())
     .then(t => {
-      const jsonStr = t.match(/\{.*\}/s)[0];
-      return JSON.parse(jsonStr);
-    })
+  const jsonStr = t.match(/\{.*\}/s)[0]; // 取出大括號內JSON字串
+  return JSON.parse(jsonStr);
+})
     .then(data => {
       let rows = data.table.rows || [];
       if (rows.length > 1) rows = rows.slice(1);
@@ -678,6 +667,7 @@ function getInitialSheet() {
   return sheetNames.includes(tab) ? tab : sheetNames[0];
 }
 
+// 初始化
 sheetNames.forEach(createTab);
 preloadAllSheets();
 const initialSheet = getInitialSheet();
@@ -685,30 +675,36 @@ tabElements[initialSheet].classList.add("active");
 document.documentElement.style.setProperty('--tab-color', colors[initialSheet] || "#999");
 loadSheetData(initialSheet);
 
+// 產生重置按鈕
+createResetTab();
+
 function createResetTab() {
   const resetTab = document.createElement("div");
   resetTab.className = "tab reset-tab";
+
+  // ✅ 設定紅色圈圈
   resetTab.style.setProperty("--tab-color", "#EF7C8E");
+
   resetTab.innerHTML = `
     <div class="tab-circle">
-      <img src="https://i.postimg.cc/d3qMwwCv/icon.png" alt="Reset">
-      <svg width="70" height="70">
-        <circle
-          cx="35" cy="35" r="28"
-          stroke="#e0e0e0" stroke-width="4" fill="none"
-        ></circle>
-        <circle
-          cx="35" cy="35" r="28"
-          stroke="var(--tab-color)"
-          stroke-width="4" fill="none"
-          stroke-linecap="round"
-        ></circle>
-      </svg>
-    </div>
-    <div class="tab-label">
-      <div class="tab-name">重置圖鑑</div>
-      <div class="tab-count">ฅ(๑*д*๑)ฅ</div>
-    </div>
+  <img src="https://i.postimg.cc/d3qMwwCv/icon.png" alt="Reset">
+  <svg width="70" height="70">
+    <circle
+      cx="35" cy="35" r="28"
+      stroke="#e0e0e0" stroke-width="4" fill="none"
+    ></circle>
+    <circle
+      cx="35" cy="35" r="28"
+      stroke="var(--tab-color)"
+      stroke-width="4" fill="none"
+      stroke-linecap="round"
+    ></circle>
+  </svg>
+</div>
+<div class="tab-label">
+  <div class="tab-name">重置圖鑑</div>
+  <div class="tab-count">ฅ(๑*д*๑)ฅ</div>
+</div>
   `;
 
   resetTab.addEventListener("click", () => {
@@ -727,44 +723,6 @@ function createResetTab() {
 
   tabsContainer.appendChild(resetTab);
 }
-
-const navBar = document.querySelector('.nav-bar');
-navBar.addEventListener('click', e => {
-  if (e.target.tagName === 'A') {
-    // 不阻止跳轉，記錄點擊的 href
-    localStorage.setItem('navBarActive', e.target.getAttribute('href'));
-  }
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  const activeHref = localStorage.getItem('navBarActive');
-  if (!activeHref) return;
-
-  document.querySelectorAll('.nav-bar a').forEach(a => {
-    if (a.getAttribute('href') === activeHref) {
-      a.classList.add('active');
-    } else {
-      a.classList.remove('active');
-    }
-  });
-});
-
-function setNavBarActiveByHash() {
-  const navBar = document.querySelector(".nav-bar");
-  const hash = window.location.hash;
-  if (!hash) return;
-  navBar.querySelectorAll('a').forEach(link => {
-    if (link.getAttribute('href') === hash) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
-  });
-}
-
-window.addEventListener('hashchange', () => {
-  setNavBarActiveByHash();
-});
 
 </script>
 </body>
