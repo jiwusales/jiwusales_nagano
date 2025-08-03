@@ -702,8 +702,6 @@ function getInitialSheet() {
 sheetNames.forEach(createTab);
 preloadAllSheets();
 const initialSheet = getInitialSheet();
-tabElements[initialSheet].classList.add("active");
-document.documentElement.style.setProperty('--tab-color', colors[initialSheet] || "#999");
 loadSheetData(initialSheet);
 
 // 產生重置按鈕
