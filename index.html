@@ -703,6 +703,7 @@ sheetNames.forEach(createTab);
 preloadAllSheets();
 const initialSheet = getInitialSheet();
 loadSheetData(initialSheet);
+tabElements[initialSheet].classList.add("active");
 
 // 產生重置按鈕
 createResetTab();
