@@ -101,11 +101,20 @@ body {
   text-align: center;
   user-select: none;
   }
-.nav-bar a,
-.nav-link.active {
+.nav-bar a {
   color: #333333;
   text-decoration: none;
   margin: 0 4px;
+  background-color: transparent;  /* 確保沒有背景色 */
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: color 0.3s;
+}
+
+.nav-bar a.active {
+  color: #90ADC6 !important;
+  background-color: transparent !important; /* 取消底色 */
+  font-weight: bold;
 }
 
 .nav-link.active {
@@ -723,7 +732,22 @@ function createResetTab() {
 
   tabsContainer.appendChild(resetTab);
 }
+const navLinks = document.querySelectorAll('.nav-bar a');
 
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+
+    // 清掉原本 active
+    navLinks.forEach(l => l.classList.remove('active'));
+
+    // 加上點到的那個 active
+    link.classList.add('active');
+
+    // 更新網址 hash
+    window.location.hash = link.getAttribute('href');
+  });
+});
 </script>
 </body>
 </html>
