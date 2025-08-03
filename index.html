@@ -729,17 +729,25 @@ function createResetTab() {
 }
 
 const navBar = document.querySelector('.nav-bar');
-
 navBar.addEventListener('click', e => {
   if (e.target.tagName === 'A') {
-    e.preventDefault();  // 不跳頁
-    // 取消其他連結 active
-    navBar.querySelectorAll('a').forEach(a => a.classList.remove('active'));
-    // 加上自己 active
-    e.target.classList.add('active');
+    // 不阻止跳轉，記錄點擊的 href
+    localStorage.setItem('navBarActive', e.target.getAttribute('href'));
   }
 });
 
+window.addEventListener('DOMContentLoaded', () => {
+  const activeHref = localStorage.getItem('navBarActive');
+  if (!activeHref) return;
+
+  document.querySelectorAll('.nav-bar a').forEach(a => {
+    if (a.getAttribute('href') === activeHref) {
+      a.classList.add('active');
+    } else {
+      a.classList.remove('active');
+    }
+  });
+});
 
 function setNavBarActiveByHash() {
   const navBar = document.querySelector(".nav-bar");
