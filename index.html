@@ -534,7 +534,12 @@ function updateNavBar(sheetName) {
   const navBar = document.querySelector(".nav-bar");
   if (!navBar) return;
 
-  const data = currentData[sheetName] || [];
+  const data = currentData[sheetName];
+  if (!data || data.length === 0) {
+    // 不動作，或你想要設定一個預設字串也行
+    return;
+  }
+
   const types = [...new Set(data.map(item => item.type))];
 
   navBar.innerHTML = types.map(type => `<a href="#${type}" data-name="${type}">${type}</a>`).join("｜");
