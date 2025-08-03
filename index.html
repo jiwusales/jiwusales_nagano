@@ -113,6 +113,11 @@ body {
   outline: none;
   background-color: transparent; /* 取消點擊時灰底 */
 }
+
+    .nav-bar a.active {
+  font-weight: bold;
+  color: #90ADC6;
+}
   
 .logo-container {
   text-align: center;
@@ -537,9 +542,16 @@ function updateTabCount(sheetName) {
     navItems = ["吊娃", "娃", "其他", "景品", "名創"];
   }
 
-  navBar.innerHTML = navItems.map(name => `<a href="#${name}">${name}</a>`).join("｜");
-}
+  navBar.innerHTML = navItems.map(name => `<a href="#${name}" data-name="${name}">${name}</a>`).join("｜");
 
+// ✅ 監聽點擊，加上 active class
+const links = navBar.querySelectorAll("a");
+links.forEach(link => {
+  link.addEventListener("click", () => {
+    links.forEach(l => l.classList.remove("active"));
+    link.classList.add("active");
+  });
+});
   
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
