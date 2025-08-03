@@ -729,19 +729,17 @@ function createResetTab() {
 }
 
 const navBar = document.querySelector('.nav-bar');
+
 navBar.addEventListener('click', e => {
   if (e.target.tagName === 'A') {
-    e.preventDefault();
+    e.preventDefault();  // 不跳頁
+    // 取消其他連結 active
     navBar.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    // 加上自己 active
     e.target.classList.add('active');
-    const hash = e.target.getAttribute('href');
-    if (window.location.hash !== hash) {
-      window.location.hash = hash;
-    } else {
-      setNavBarActiveByHash();
-    }
   }
 });
+
 
 function setNavBarActiveByHash() {
   const navBar = document.querySelector(".nav-bar");
