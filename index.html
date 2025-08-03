@@ -105,19 +105,22 @@ body {
   color: #333333;
   text-decoration: none;
   margin: 0 4px;
+  -webkit-tap-highlight-color: transparent; /* 取消點擊時手機高亮 */
   background-color: transparent;
 }
-
 .nav-bar a:focus,
 .nav-bar a:active {
   outline: none;
-  background-color: transparent;
+  background-color: transparent; /* 取消點擊時灰底 */
 }
-
-.nav-bar a.active {
+ .nav-bar a.active {
   font-weight: bold;
-  color: #90ADC6 !important;
-  background-color: transparent;
+  color: var(--tab-color, #90ADC6);
+}
+.nav-link.active {
+  font-weight: bold;
+  color: var(--tab-color, #333333); /* 使用目前分頁顏色 */
+  text-decoration: none; /* ✅ 確保不會出現底線 */
 }
   
 .logo-container {
@@ -561,6 +564,14 @@ function updateTabCount(sheetName) {
     });
   });
 
+  // 預設第一個連結 active
+  const firstLink = navBar.querySelector("a");
+  if (firstLink) {
+    navBar.querySelectorAll("a").forEach(el => el.classList.remove("active"));
+    firstLink.classList.add("active");
+  }
+}
+  
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
   let grouped = {};
@@ -691,15 +702,6 @@ function getInitialSheet() {
 sheetNames.forEach(createTab);
 preloadAllSheets();
 const initialSheet = getInitialSheet();
-
-// 如果網址有tab參數就設定active，否則不設定
-const urlParams = new URLSearchParams(window.location.search);
-const tabParam = urlParams.get("tab");
-if (tabParam && sheetNames.includes(tabParam)) {
-  tabElements[tabParam].classList.add("active");
-  document.documentElement.style.setProperty('--tab-color', colors[tabParam] || "#999");
-}
-
 loadSheetData(initialSheet);
 
 // 產生重置按鈕
