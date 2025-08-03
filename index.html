@@ -114,8 +114,9 @@ body {
   background-color: transparent; /* 取消點擊時灰底 */
 }
  .nav-bar a.active {
-  font-weight: bold;
   color: var(--tab-color, #90ADC6);
+  font-weight: bold;
+  text-decoration: none;
 }
 .nav-link.active {
   font-weight: bold;
@@ -547,8 +548,16 @@ function updateTabCount(sheetName) {
   }
 
   navBar.innerHTML = navItems.map(name => `<a href="#${name}">${name}</a>`).join("｜");
-}
 
+  // 這裡加：
+  const links = navBar.querySelectorAll("a");
+  links.forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      links.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+    });
+  });
   
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
