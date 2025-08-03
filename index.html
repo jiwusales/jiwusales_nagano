@@ -410,13 +410,7 @@ h1 {
     如資料有誤或缺可私訊 ⮕ <a href="https://lin.ee/X6FUFI9" target="_blank">JIWU吉物販售</a>
   </div>
 
-  <div class="nav-bar">
-  <a href="#吊娃">吊娃</a>｜
-  <a href="#娃">娃</a>｜
-  <a href="#其他">其他</a>｜
-  <a href="#景品">景品</a>｜
-  <a href="#名創">名創</a>
-</div>
+ <div class="nav-bar"></div>
   
   <!-- LOGO -->
   <div class="logo-container">
@@ -530,6 +524,22 @@ function updateTabCount(sheetName) {
     `;
   }
 }
+
+  function updateNavBar(sheetName) {
+  const navBar = document.querySelector(".nav-bar");
+  if (!navBar) return;
+
+  let navItems = [];
+
+  if (sheetName === "綜合角色") {
+    navItems = ["馬來熊", "福袋．土龍", "水族館", "魚腸．豬腳", "綜合"];
+  } else {
+    navItems = ["吊娃", "娃", "其他", "景品", "名創"];
+  }
+
+  navBar.innerHTML = navItems.map(name => `<a href="#${name}">${name}</a>`).join("｜");
+}
+
   
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
@@ -600,6 +610,7 @@ function renderCards(data, sheetName) {
 
 function loadSheetData(sheetName) {
   cardContainer.innerHTML = "載入中...";
+  updateNavBar(sheetName);
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
   fetch(url)
     .then(res => res.text())
