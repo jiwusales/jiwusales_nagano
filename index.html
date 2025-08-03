@@ -530,28 +530,23 @@ function updateTabCount(sheetName) {
   }
 }
 
-  function updateNavBar(sheetName) {
+function updateNavBar(sheetName) {
   const navBar = document.querySelector(".nav-bar");
   if (!navBar) return;
 
-  let navItems = [];
+  const data = currentData[sheetName] || [];
+  const types = [...new Set(data.map(item => item.type))];
 
-  if (sheetName === "綜合角色") {
-    navItems = ["馬來熊", "福袋．土龍", "水族館", "魚腸．豬腳", "綜合"];
-  } else {
-    navItems = ["吊娃", "娃", "其他", "景品", "名創"];
-  }
+  navBar.innerHTML = types.map(type => `<a href="#${type}" data-name="${type}">${type}</a>`).join("｜");
 
-  navBar.innerHTML = navItems.map(name => `<a href="#${name}" data-name="${name}">${name}</a>`).join("｜");
-
-// ✅ 監聽點擊，加上 active class
-const links = navBar.querySelectorAll("a");
-links.forEach(link => {
-  link.addEventListener("click", () => {
-    links.forEach(l => l.classList.remove("active"));
-    link.classList.add("active");
+  const links = navBar.querySelectorAll("a");
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      links.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+    });
   });
-});
+}
   
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
