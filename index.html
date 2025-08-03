@@ -702,6 +702,15 @@ function getInitialSheet() {
 sheetNames.forEach(createTab);
 preloadAllSheets();
 const initialSheet = getInitialSheet();
+
+// 如果網址有tab參數就設定active，否則不設定
+const urlParams = new URLSearchParams(window.location.search);
+const tabParam = urlParams.get("tab");
+if (tabParam && sheetNames.includes(tabParam)) {
+  tabElements[tabParam].classList.add("active");
+  document.documentElement.style.setProperty('--tab-color', colors[tabParam] || "#999");
+}
+
 loadSheetData(initialSheet);
 
 // 產生重置按鈕
