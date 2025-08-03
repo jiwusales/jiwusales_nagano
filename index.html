@@ -563,15 +563,7 @@ function updateTabCount(sheetName) {
       }
     });
   });
-
-  // 預設第一個連結 active
-  const firstLink = navBar.querySelector("a");
-  if (firstLink) {
-    navBar.querySelectorAll("a").forEach(el => el.classList.remove("active"));
-    firstLink.classList.add("active");
-  }
-}
-  
+ 
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
   let grouped = {};
