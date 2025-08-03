@@ -101,23 +101,13 @@ body {
   text-align: center;
   user-select: none;
   }
-.nav-bar a {
+.nav-bar a,
+.nav-link.active {
   color: #333333;
   text-decoration: none;
   margin: 0 4px;
-  -webkit-tap-highlight-color: transparent; /* 取消點擊時手機高亮 */
-  background-color: transparent;
 }
-.nav-bar a:focus,
-.nav-bar a:active {
-  outline: none;
-  background-color: transparent; /* 取消點擊時灰底 */
-}
- .nav-bar a.active {
-  color: var(--tab-color, #90ADC6);
-  font-weight: bold;
-  text-decoration: none;
-}
+
 .nav-link.active {
   font-weight: bold;
   color: var(--tab-color, #333333); /* 使用目前分頁顏色 */
@@ -548,16 +538,8 @@ function updateTabCount(sheetName) {
   }
 
   navBar.innerHTML = navItems.map(name => `<a href="#${name}">${name}</a>`).join("｜");
+}
 
-  // 這裡加：
-  const links = navBar.querySelectorAll("a");
-  links.forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      links.forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
-    });
-  });
   
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
