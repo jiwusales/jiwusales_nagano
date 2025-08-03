@@ -101,21 +101,17 @@ body {
   text-align: center;
   user-select: none;
   }
-.nav-bar a,
-.nav-link.active {
+.nav-bar a {
   color: #333333;
   text-decoration: none;
   margin: 0 4px;
+  -webkit-tap-highlight-color: transparent; /* 取消點擊時手機高亮 */
+  background-color: transparent;
 }
-  .nav-bar a:active {
-  background-color: transparent !important; /* 移除點擊灰底 */
-  color: #90ADC6 !important;               /* 點擊顏色變藍 */
-}
-
-.nav-link.active {
-  font-weight: bold;
-  color: #90ADC6;
-  text-decoration: none; /* ✅ 確保不會出現底線 */
+ .nav-bar a:focus,
+.nav-bar a:active {
+  outline: none;
+  background-color: transparent; /* 取消點擊時灰底 */
 }
   
 .logo-container {
