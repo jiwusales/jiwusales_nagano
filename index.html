@@ -107,10 +107,14 @@ body {
   text-decoration: none;
   margin: 0 4px;
 }
+  .nav-bar a:active {
+  background-color: transparent !important; /* 移除點擊灰底 */
+  color: #90ADC6 !important;               /* 點擊顏色變藍 */
+}
 
 .nav-link.active {
   font-weight: bold;
-  color: var(--tab-color, #333333); /* 使用目前分頁顏色 */
+  color: #90ADC6;
   text-decoration: none; /* ✅ 確保不會出現底線 */
 }
   
