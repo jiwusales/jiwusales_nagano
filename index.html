@@ -571,112 +571,50 @@ function renderCards(data, sheetName) {
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
-    groupContainer.className = "group-grid";
+    groupContainer.className = "group-grid";  // 這行必須加，改用 CSS Grid 排版
 
-  grouped[type].forEach(item => {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.style.borderColor = "#ccc";
+    grouped[type].forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.borderColor = "#ccc";
 
-  const checkmark = document.createElement("div");
-  checkmark.className = "checkmark";
-  checkmark.style.backgroundColor = colors[sheetName] || "#ccc";
-  checkmark.style.display = "none";
-  card.appendChild(checkmark);
+      if (collected.includes(item.name)) {
+        card.classList.add("collected");
+        card.style.borderColor = colors[sheetName] || "#ccc";
+      }
 
-  if (collected.includes(item.name)) {
-    card.classList.add("collected");
-    card.style.borderColor = colors[sheetName] || "#ccc";
-    card.dataset.count = 1;
-    checkmark.style.display = "flex";
-    checkmark.innerHTML = `
-      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-        <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
-      </svg>
-    `;
-  } else {
-    card.dataset.count = 0;
-  }
-
-  card.innerHTML += `
-    <img src="${item.imgUrl || 'https://i.postimg.cc/bv5xRs04/image.png'}" alt="${item.name}" />
-    <div class="name">${formatName(item.name)}</div>
-    <div class="size">${item.size}</div>
-  `;
-
-  // 阻止圖片長按選單彈出
-  card.querySelector("img").addEventListener("contextmenu", e => e.preventDefault());
-
-  // 點擊事件
-  card.addEventListener("click", () => {
-    let count = parseInt(card.dataset.count) || 0;
-
-    if (count === 0) {
-      count = 1;
-      card.classList.add("collected");
-      card.style.borderColor = colors[sheetName] || "#ccc";
-      checkmark.style.display = "flex";
-      checkmark.innerHTML = `
-        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
-        </svg>
+      card.innerHTML = `
+        <div class="checkmark" style="background-color: ${colors[sheetName] || "#ccc"}">
+          <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
+          </svg>
+        </div>
+        <img src="${item.imgUrl || 'https://i.postimg.cc/bv5xRs04/image.png'}" alt="${item.name}" />
+        <div class="name">${formatName(item.name)}</div>
+        <div class="size">${item.size}</div>
       `;
-      if (!collected.includes(item.name)) collected.push(item.name);
-    } else if (count === 1) {
-      count = 2;
-      checkmark.textContent = count;
-    } else if (count < 10) {
-      count++;
-      checkmark.textContent = count;
-    }
-    card.dataset.count = count;
-    localStorage.setItem("collectedDolls", JSON.stringify(collected));
-    updateTabCount(sheetName);
-  });
 
-  // 長按減1，使用 pointer 事件並防止系統選單
-  let pressTimer = null;
-  const startPress = () => {
-    pressTimer = setTimeout(() => {
-      let count = parseInt(card.dataset.count) || 0;
-      if (count > 0) {
-        count--;
-        card.dataset.count = count;
+      const checkmark = card.querySelector(".checkmark");
+      checkmark.style.display = collected.includes(item.name) ? "flex" : "none";
 
-        if (count === 0) {
-          card.classList.remove("collected");
+      card.addEventListener("click", () => {
+        card.classList.toggle("collected");
+        const isCollected = card.classList.contains("collected");
+        if (isCollected) {
+          card.style.borderColor = colors[sheetName] || "#ccc";
+          checkmark.style.display = "flex";
+          if (!collected.includes(item.name)) collected.push(item.name);
+        } else {
           card.style.borderColor = "#ccc";
           checkmark.style.display = "none";
           collected = collected.filter(n => n !== item.name);
-        } else if (count === 1) {
-          checkmark.innerHTML = `
-            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
-            </svg>
-          `;
-        } else {
-          checkmark.textContent = count;
         }
         localStorage.setItem("collectedDolls", JSON.stringify(collected));
         updateTabCount(sheetName);
-      }
-    }, 1000);
-  };
+      });
 
-  const cancelPress = () => {
-    clearTimeout(pressTimer);
-  };
-
-  card.addEventListener("pointerdown", e => {
-    e.preventDefault(); // 阻止長按彈出選單
-    startPress();
-  });
-  card.addEventListener("pointerup", cancelPress);
-  card.addEventListener("pointerleave", cancelPress);
-  card.addEventListener("pointercancel", cancelPress);
-
-  groupContainer.appendChild(card);
-});
+      groupContainer.appendChild(card);
+    });
 
     cardContainer.appendChild(groupContainer);
   });
