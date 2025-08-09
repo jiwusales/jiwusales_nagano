@@ -296,6 +296,7 @@ h1 {
   object-fit: contain;
   justify-content: flex-end; /* 圖片靠底 */
   align-items: center;      /* 水平置中 */
+  -webkit-touch-callout: none;
 }
 .card .name,
 .card .size {
@@ -738,6 +739,25 @@ function createResetTab() {
 
   tabsContainer.appendChild(resetTab);
 }
+// 阻止圖片長按彈出選單或複製
+document.querySelectorAll(".card img").forEach(img => {
+  // 阻止長按彈出菜單
+  img.addEventListener("contextmenu", e => e.preventDefault());
+  // 阻止選取
+  img.addEventListener("selectstart", e => e.preventDefault());
+  // touchstart 預防長按
+  img.addEventListener("touchstart", e => {
+    // 這裡可以加一個標記防止選取或顯示預設
+    e.preventDefault();
+  }, { passive: false });
+});
+
+// 整個卡片也阻止選取及右鍵
+document.querySelectorAll(".card").forEach(card => {
+  card.addEventListener("contextmenu", e => e.preventDefault());
+  card.addEventListener("selectstart", e => e.preventDefault());
+  card.addEventListener("touchstart", e => e.preventDefault(), { passive: false });
+});
 
 </script>
 </body>
