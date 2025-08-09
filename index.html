@@ -573,92 +573,103 @@ function renderCards(data, sheetName) {
     const groupContainer = document.createElement("div");
     groupContainer.className = "group-grid";
 
-    grouped[type].forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.style.borderColor = "#ccc";
+   grouped[type].forEach(item => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.style.borderColor = "#ccc";
 
-      // 這裡改成記錄數量的物件，localStorage key: collectedDollsCount
-      // 初始收藏數字
-      let counts = JSON.parse(localStorage.getItem("collectedDollsCount") || "{}");
-      let count = counts[item.name] || 0;
+  const checkmark = document.createElement("div");
+  checkmark.className = "checkmark";
+  checkmark.style.backgroundColor = colors[sheetName] || "#ccc";
+  checkmark.style.display = "none";
+  card.appendChild(checkmark);
 
-      if (count > 0) {
-        card.classList.add("collected");
-        card.style.borderColor = colors[sheetName] || "#ccc";
-      }
+  if (collected.includes(item.name)) {
+    card.classList.add("collected");
+    card.style.borderColor = colors[sheetName] || "#ccc";
+    card.dataset.count = 1; // 預設收藏為1
+    checkmark.style.display = "flex";
+    checkmark.innerHTML = `
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
+      </svg>
+    `;
+  } else {
+    card.dataset.count = 0;
+  }
 
-      card.innerHTML = `
-        <div class="checkmark" style="background-color: ${colors[sheetName] || "#ccc"}; font-size: 12px; font-weight: bold; color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; width: 16px; height: 16px; position: absolute; top: 3px; right: 3px;">
-          ${count > 0 ? count : ""}
-        </div>
-        <img src="${item.imgUrl || 'https://i.postimg.cc/bv5xRs04/image.png'}" alt="${item.name}" />
-        <div class="name">${formatName(item.name)}</div>
-        <div class="size">${item.size}</div>
+  card.innerHTML += `
+    <img src="${item.imgUrl || 'https://i.postimg.cc/bv5xRs04/image.png'}" alt="${item.name}" />
+    <div class="name">${formatName(item.name)}</div>
+    <div class="size">${item.size}</div>
+  `;
+
+  // 點擊事件：更新數字或勾勾，變更邊框顏色
+  card.addEventListener("click", () => {
+    let count = parseInt(card.dataset.count) || 0;
+
+    if (count === 0) {
+      // 第一次點擊，收藏＋勾勾
+      count = 1;
+      card.classList.add("collected");
+      card.style.borderColor = colors[sheetName] || "#ccc";
+      checkmark.style.display = "flex";
+      checkmark.innerHTML = `
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
+        </svg>
       `;
+      if (!collected.includes(item.name)) collected.push(item.name);
+    } else if (count < 10) {
+      // 第二次點擊開始數字2～
+      count++;
+      checkmark.textContent = count;
+    }
 
-      const checkmark = card.querySelector(".checkmark");
+    card.dataset.count = count;
+    localStorage.setItem("collectedDolls", JSON.stringify(collected));
+    updateTabCount(sheetName);
+  });
 
-      // 點擊邏輯：第一次設為1（勾勾變數字1），第二次起+1，最多10
-      card.addEventListener("click", () => {
-        let counts = JSON.parse(localStorage.getItem("collectedDollsCount") || "{}");
-        let currentCount = counts[item.name] || 0;
-        if (currentCount === 0) {
-          currentCount = 1; // 第一次點，變1
-          card.classList.add("collected");
-          card.style.borderColor = colors[sheetName] || "#ccc";
-          checkmark.style.display = "flex";
-        } else if (currentCount < 10) {
-          currentCount++;
+  // 長按事件：1秒後減1，0時取消收藏
+  let pressTimer = null;
+  card.addEventListener("mousedown", () => {
+    pressTimer = setTimeout(() => {
+      let count = parseInt(card.dataset.count) || 0;
+      if (count > 0) {
+        count--;
+        card.dataset.count = count;
+
+        if (count === 0) {
+          // 取消收藏，隱藏勾勾/數字，邊框回復
+          card.classList.remove("collected");
+          card.style.borderColor = "#ccc";
+          checkmark.style.display = "none";
+          collected = collected.filter(n => n !== item.name);
+        } else if (count === 1) {
+          // 只剩1顯示勾勾
+          checkmark.innerHTML = `
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 11.2L3.3 8.5l-1.4 1.4L6 14 14 6l-1.4-1.4z"/>
+            </svg>
+          `;
+        } else {
+          // 顯示數字
+          checkmark.textContent = count;
         }
-        counts[item.name] = currentCount;
-        localStorage.setItem("collectedDollsCount", JSON.stringify(counts));
-        checkmark.textContent = currentCount;
+        localStorage.setItem("collectedDolls", JSON.stringify(collected));
         updateTabCount(sheetName);
-      });
-
-      // 長按1秒減1，0時取消
-      let pressTimer = null;
-      card.addEventListener("mousedown", startPress);
-      card.addEventListener("touchstart", startPress);
-      card.addEventListener("mouseup", cancelPress);
-      card.addEventListener("mouseleave", cancelPress);
-      card.addEventListener("touchend", cancelPress);
-      card.addEventListener("touchcancel", cancelPress);
-
-      function startPress(e) {
-        e.preventDefault();
-        pressTimer = setTimeout(() => {
-          let counts = JSON.parse(localStorage.getItem("collectedDollsCount") || "{}");
-          let currentCount = counts[item.name] || 0;
-          if (currentCount > 0) {
-            currentCount--;
-            if (currentCount === 0) {
-              // 取消收藏
-              card.classList.remove("collected");
-              card.style.borderColor = "#ccc";
-              checkmark.style.display = "none";
-              delete counts[item.name];
-            } else {
-              checkmark.style.display = "flex";
-            }
-            counts[item.name] = currentCount;
-            checkmark.textContent = currentCount > 0 ? currentCount : "";
-            localStorage.setItem("collectedDollsCount", JSON.stringify(counts));
-            updateTabCount(sheetName);
-            // 繼續長按連續減1
-            pressTimer = setTimeout(startPress, 1000);
-          }
-        }, 1000);
       }
-      function cancelPress() {
-        clearTimeout(pressTimer);
-        pressTimer = null;
-      }
-
-      groupContainer.appendChild(card);
-    });
-
+    }, 1000);
+  });
+  card.addEventListener("mouseup", () => {
+    clearTimeout(pressTimer);
+  });
+  card.addEventListener("mouseleave", () => {
+    clearTimeout(pressTimer);
+  });
+  groupContainer.appendChild(card);
+});
     cardContainer.appendChild(groupContainer);
   });
 }
