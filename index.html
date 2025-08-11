@@ -495,10 +495,13 @@ function createTab(sheetName) {
 }
 
 function updateTabCount(sheetName) {
-  if (sheetName === "重置圖鑑") return; // 🚨 如果是重置按鈕，跳過更新
+  if (sheetName === "重置圖鑑") return;
 
   const data = currentData[sheetName] || [];
-  const ownedCount = data.filter(item => collected.includes(item.name)).length;
+  const ownedCount = data.filter(item => {
+    const key = `${sheetName}|${item.type || "無類型"}|${item.name}`;
+    return collected.includes(key);
+  }).length;
   const totalCount = data.length;
   const percent = totalCount ? ownedCount / totalCount : 0;
 
@@ -575,14 +578,16 @@ function renderCards(data, sheetName) {
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
-    groupContainer.className = "group-grid";  // 這行必須加，改用 CSS Grid 排版
+    groupContainer.className = "group-grid";
 
     grouped[type].forEach(item => {
       const card = document.createElement("div");
       card.className = "card";
       card.style.borderColor = "#ccc";
 
-      if (collected.includes(item.name)) {
+      const itemKey = `${sheetName}|${type}|${item.name}`;
+
+      if (collected.includes(itemKey)) {
         card.classList.add("collected");
         card.style.borderColor = colors[sheetName] || "#ccc";
       }
@@ -599,7 +604,7 @@ function renderCards(data, sheetName) {
       `;
 
       const checkmark = card.querySelector(".checkmark");
-      checkmark.style.display = collected.includes(item.name) ? "flex" : "none";
+      checkmark.style.display = collected.includes(itemKey) ? "flex" : "none";
 
       card.addEventListener("click", () => {
         card.classList.toggle("collected");
@@ -607,11 +612,11 @@ function renderCards(data, sheetName) {
         if (isCollected) {
           card.style.borderColor = colors[sheetName] || "#ccc";
           checkmark.style.display = "flex";
-          if (!collected.includes(item.name)) collected.push(item.name);
+          if (!collected.includes(itemKey)) collected.push(itemKey);
         } else {
           card.style.borderColor = "#ccc";
           checkmark.style.display = "none";
-          collected = collected.filter(n => n !== item.name);
+          collected = collected.filter(n => n !== itemKey);
         }
         localStorage.setItem("collectedDolls", JSON.stringify(collected));
         updateTabCount(sheetName);
