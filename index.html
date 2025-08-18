@@ -639,6 +639,10 @@ function renderCards(data, sheetName) {
     cardContainer.appendChild(groupContainer);
   });
 }
+    Object.keys(grouped).forEach(type => {
+    updateTypeCount(type, sheetName);
+  });
+}
 
 function updateTypeCount(type, sheetName) {
   const storedCollected = JSON.parse(localStorage.getItem(getCollectedKey(sheetName))) || [];
