@@ -658,6 +658,9 @@ function updateTypeCount(type, sheetName) {
 
 function loadSheetData(sheetName) {
   cardContainer.innerHTML = "載入中...";
+  
+  // 先更新 collected 變數
+  collected = JSON.parse(localStorage.getItem(getCollectedKey(sheetName))) || [];
 
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
   fetch(url)
