@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -238,7 +237,7 @@ h1 {
   max-width: 100%; /* 或設定與 .group-grid 同寬 */
   padding-left: 5px; /* 和 .group-grid 左右 padding 相同 */
   text-align: left;
-  margin: 10px 0 5px 0px;
+  margin: 10px 0 5px -15px;
   font-weight: bold;
   font-size: 18px;
   color: #333333;
@@ -247,7 +246,7 @@ h1 {
   box-sizing: border-box;
 }
 .type-divider span {
-  margin: 0;
+  margin: 0 15px;
   font-weight: bold;
   text-align: center;
   white-space: nowrap;
@@ -584,9 +583,7 @@ function renderCards(data, sheetName) {
     const ownedCount = typeData.filter(item => collected.includes(`${sheetName}|${type}|${item.name}`)).length;
     const totalCount = typeData.length;
 
-    // ✅ 修改這裡，加上 type-count class
-    // 分類標題生成時
-    divider.innerHTML = `<span data-type="${type}">${type}<span class="type-count">(${ownedCount}/${totalCount})</span></span>`;
+    divider.innerHTML = `<span data-type="${type}">${type} (${ownedCount}/${totalCount})</span>`;
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
@@ -634,15 +631,13 @@ function renderCards(data, sheetName) {
 
         updateTabCount(sheetName); // 更新 tab 圓圈進度
 
-        // 更新該分類數量 ✅
+        // 更新該分類數量
         const divider = document.getElementById(type);
         if (divider) {
           const ownedCount = typeData.filter(item => collected.includes(`${sheetName}|${type}|${item.name}`)).length;
           const countSpan = divider.querySelector(".type-count");
-if (countSpan) {
-  const ownedCount = typeData.filter(item => collected.includes(`${sheetName}|${type}|${item.name}`)).length;
-  countSpan.textContent = `(${ownedCount}/${totalCount})`;
-}
+          if (countSpan) countSpan.textContent = `(${ownedCount}/${totalCount})`;
+        }
       });
 
       groupContainer.appendChild(card);
