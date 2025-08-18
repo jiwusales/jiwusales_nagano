@@ -237,7 +237,7 @@ h1 {
   max-width: 100%; /* 或設定與 .group-grid 同寬 */
   padding-left: 5px; /* 和 .group-grid 左右 padding 相同 */
   text-align: left;
-  margin: 10px 0 0 0;
+  margin: 10px 0 5px -15px;
   font-weight: bold;
   font-size: 18px;
   color: #333333;
@@ -464,7 +464,12 @@ let collected = JSON.parse(localStorage.getItem("collectedDolls")) || [];
 const tabElements = {};
 let currentData = {};
 
-  function formatName(name) {
+// ✅ 新增：取得每個分頁的 localStorage key
+function getCollectedKey(sheetName) {
+  return `collectedDolls_${sheetName}`;
+}
+
+function formatName(name) {
   if (!name) return "";
   const cleanName = name.trim();
   const totalLength = cleanName.length;
@@ -501,10 +506,8 @@ function updateTabCount(sheetName) {
   if (sheetName === "重置圖鑑") return;
 
   const data = currentData[sheetName] || [];
-  const ownedCount = data.filter(item => {
-    const key = `${sheetName}|${item.type || "無類型"}|${item.name}`;
-    return collected.includes(key);
-  }).length;
+  const storedCollected = JSON.parse(localStorage.getItem(getCollectedKey(sheetName))) || [];
+  const ownedCount = data.filter(item => storedCollected.includes(`${sheetName}|${item.type || "無類型"}|${item.name}`)).length;
   const totalCount = data.length;
   const percent = totalCount ? ownedCount / totalCount : 0;
 
@@ -545,13 +548,9 @@ function updateNavBar(sheetName) {
   if (!navBar) return;
 
   const data = currentData[sheetName];
-  if (!data || data.length === 0) {
-    // 不動作，或你想要設定一個預設字串也行
-    return;
-  }
+  if (!data || data.length === 0) return;
 
   const types = [...new Set(data.map(item => item.type))];
-
   navBar.innerHTML = types.map(type => `<a href="#${type}" data-name="${type}">${type}</a>`).join("｜");
 
   const links = navBar.querySelectorAll("a");
@@ -562,7 +561,7 @@ function updateNavBar(sheetName) {
     });
   });
 }
-  
+
 function renderCards(data, sheetName) {
   cardContainer.innerHTML = "";
   let grouped = {};
@@ -577,7 +576,14 @@ function renderCards(data, sheetName) {
     divider.className = "type-divider";
     divider.id = type;
     divider.style.scrollMarginTop = "87px";
-    divider.innerHTML = `<span>${type}</span>`;
+
+    const storedCollected = JSON.parse(localStorage.getItem(getCollectedKey(sheetName))) || [];
+    const totalCount = grouped[type].length;
+    const ownedCount = grouped[type].filter(item =>
+      storedCollected.includes(`${sheetName}|${type}|${item.name}`)
+    ).length;
+
+    divider.innerHTML = `<span data-type="${type}">${type} (${ownedCount}/${totalCount})</span>`;
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
@@ -586,10 +592,10 @@ function renderCards(data, sheetName) {
     grouped[type].forEach(item => {
       const card = document.createElement("div");
       card.className = "card";
-      card.style.borderColor = "#ccc";
+      card.setAttribute("data-type", type);
+      card.setAttribute("data-name", item.name);
 
       const itemKey = `${sheetName}|${type}|${item.name}`;
-
       if (collected.includes(itemKey)) {
         card.classList.add("collected");
         card.style.borderColor = colors[sheetName] || "#ccc";
@@ -621,8 +627,10 @@ function renderCards(data, sheetName) {
           checkmark.style.display = "none";
           collected = collected.filter(n => n !== itemKey);
         }
-        localStorage.setItem("collectedDolls", JSON.stringify(collected));
+
+        localStorage.setItem(getCollectedKey(sheetName), JSON.stringify(collected));
         updateTabCount(sheetName);
+        updateTypeCount(type, sheetName);
       });
 
       groupContainer.appendChild(card);
@@ -632,9 +640,20 @@ function renderCards(data, sheetName) {
   });
 }
 
+function updateTypeCount(type, sheetName) {
+  const storedCollected = JSON.parse(localStorage.getItem(getCollectedKey(sheetName))) || [];
+  const data = currentData[sheetName].filter(item => (item.type || "無類型") === type);
+  const ownedCount = data.filter(item => storedCollected.includes(`${sheetName}|${type}|${item.name}`)).length;
+  const totalCount = data.length;
+
+  const titleSpan = document.querySelector(`.type-divider span[data-type="${type}"]`);
+  if (titleSpan) {
+    titleSpan.textContent = `${type} (${ownedCount}/${totalCount})`;
+  }
+}
+
 function loadSheetData(sheetName) {
   cardContainer.innerHTML = "載入中...";
-  // 先不要呼叫 updateNavBar，改成成功後再呼叫
 
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
   fetch(url)
@@ -654,7 +673,7 @@ function loadSheetData(sheetName) {
       }));
       currentData[sheetName] = parsed;
 
-      updateNavBar(sheetName);  // 改成這裡呼叫
+      updateNavBar(sheetName);
       renderCards(parsed, sheetName);
       updateTabCount(sheetName);
     })
@@ -694,7 +713,6 @@ function getInitialSheet() {
   return sheetNames.includes(tab) ? tab : sheetNames[0];
 }
 
-// 初始化
 sheetNames.forEach(createTab);
 preloadAllSheets();
 const initialSheet = getInitialSheet();
@@ -702,74 +720,41 @@ tabElements[initialSheet].classList.add("active");
 document.documentElement.style.setProperty('--tab-color', colors[initialSheet] || "#999");
 loadSheetData(initialSheet);
 
-// 產生重置按鈕
+// 重置按鈕
 createResetTab();
 
 function createResetTab() {
   const resetTab = document.createElement("div");
   resetTab.className = "tab reset-tab";
-
-  // ✅ 設定紅色圈圈
   resetTab.style.setProperty("--tab-color", "#EF7C8E");
 
   resetTab.innerHTML = `
     <div class="tab-circle">
-  <img src="https://i.postimg.cc/d3qMwwCv/icon.png" alt="Reset">
-  <svg width="70" height="70">
-    <circle
-      cx="35" cy="35" r="28"
-      stroke="#e0e0e0" stroke-width="4" fill="none"
-    ></circle>
-    <circle
-      cx="35" cy="35" r="28"
-      stroke="var(--tab-color)"
-      stroke-width="4" fill="none"
-      stroke-linecap="round"
-    ></circle>
-  </svg>
-</div>
-<div class="tab-label">
-  <div class="tab-name">重置圖鑑</div>
-  <div class="tab-count">ฅ(๑*д*๑)ฅ</div>
-</div>
+      <img src="https://i.postimg.cc/d3qMwwCv/icon.png" alt="Reset">
+      <svg width="70" height="70">
+        <circle cx="35" cy="35" r="28" stroke="#e0e0e0" stroke-width="4" fill="none"></circle>
+        <circle cx="35" cy="35" r="28" stroke="var(--tab-color)" stroke-width="4" fill="none" stroke-linecap="round"></circle>
+      </svg>
+    </div>
+    <div class="tab-label">
+      <div class="tab-name">重置圖鑑</div>
+      <div class="tab-count">ฅ(๑*д*๑)ฅ</div>
+    </div>
   `;
 
   resetTab.addEventListener("click", () => {
-    const confirmReset = confirm("❗️確定要重置寶寶們嗎 ㅇㅅㅇ ！");
-    if (confirmReset) {
+    if (confirm("❗️確定要重置寶寶們嗎 ㅇㅅㅇ ！")) {
       collected = [];
       localStorage.setItem("collectedDolls", JSON.stringify(collected));
       sheetNames.forEach(name => updateTabCount(name));
       const activeTab = document.querySelector(".tab.active .tab-name");
-      if (activeTab) {
-        loadSheetData(activeTab.textContent);
-      }
+      if (activeTab) loadSheetData(activeTab.textContent);
       alert("✨寶寶圖鑑打掃乾淨ㄌ！(˶ˆᗜˆ˵)");
     }
   });
 
   tabsContainer.appendChild(resetTab);
 }
-// 阻止圖片長按彈出選單或複製
-document.querySelectorAll(".card img").forEach(img => {
-  // 阻止長按彈出菜單
-  img.addEventListener("contextmenu", e => e.preventDefault());
-  // 阻止選取
-  img.addEventListener("selectstart", e => e.preventDefault());
-  // touchstart 預防長按
-  img.addEventListener("touchstart", e => {
-    // 這裡可以加一個標記防止選取或顯示預設
-    e.preventDefault();
-  }, { passive: false });
-});
-
-// 整個卡片也阻止選取及右鍵
-document.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("contextmenu", e => e.preventDefault());
-  card.addEventListener("selectstart", e => e.preventDefault());
-  card.addEventListener("touchstart", e => e.preventDefault(), { passive: false });
-});
-
 </script>
 </body>
 </html>
