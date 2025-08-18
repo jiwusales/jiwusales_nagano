@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -195,9 +196,6 @@ h1 {
   user-select: none;
   transition: transform 0.3s;
 }
-.tab:hover {
-  transform: scale(1.05);
-}
 .tab-circle {
   width: 70px;  /* 改成70x70 */
   height: 70px;
@@ -240,7 +238,7 @@ h1 {
   max-width: 100%; /* 或設定與 .group-grid 同寬 */
   padding-left: 5px; /* 和 .group-grid 左右 padding 相同 */
   text-align: left;
-  margin: 10px 0 0 0;
+  margin: 10px 0 5px -15px;
   font-weight: bold;
   font-size: 18px;
   color: #333333;
@@ -576,11 +574,19 @@ function renderCards(data, sheetName) {
   });
 
   Object.keys(grouped).forEach(type => {
+    // 計算分類數量
+    const ownedCount = grouped[type].filter(item => {
+      const key = `${sheetName}|${type}|${item.name}`;
+      return collected.includes(key);
+    }).length;
+    const totalCount = grouped[type].length;
+
+    // 建立分類標題，加入數量顯示
     const divider = document.createElement("div");
     divider.className = "type-divider";
     divider.id = type;
     divider.style.scrollMarginTop = "87px";
-    divider.innerHTML = `<span>${type}</span>`;
+    divider.innerHTML = `<span data-type="${type}">${type}(${ownedCount}/${totalCount})</span>`;
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
@@ -612,6 +618,7 @@ function renderCards(data, sheetName) {
       const checkmark = card.querySelector(".checkmark");
       checkmark.style.display = collected.includes(itemKey) ? "flex" : "none";
 
+      // 點擊卡片收藏 / 取消
       card.addEventListener("click", () => {
         card.classList.toggle("collected");
         const isCollected = card.classList.contains("collected");
@@ -625,13 +632,42 @@ function renderCards(data, sheetName) {
           collected = collected.filter(n => n !== itemKey);
         }
         localStorage.setItem("collectedDolls", JSON.stringify(collected));
-        updateTabCount(sheetName);
+        updateTabCount(sheetName);       // 更新 Tab 圓圈
+        updateTypeCounts(sheetName);      // 更新分類數量
       });
 
       groupContainer.appendChild(card);
     });
 
     cardContainer.appendChild(groupContainer);
+  });
+
+  // 初始化分類數量
+  updateTypeCounts(sheetName);
+}
+
+// 即時更新分類數量
+function updateTypeCounts(sheetName) {
+  const data = currentData[sheetName] || [];
+  const grouped = {};
+  data.forEach(item => {
+    const type = item.type || "無類型";
+    if (!grouped[type]) grouped[type] = [];
+    grouped[type].push(item);
+  });
+
+  Object.keys(grouped).forEach(type => {
+    const divider = document.getElementById(type);
+    if (!divider) return;
+
+    const ownedCount = grouped[type].filter(item => {
+      const key = `${sheetName}|${type}|${item.name}`;
+      return collected.includes(key);
+    }).length;
+    const totalCount = grouped[type].length;
+
+    // 更新分類數量
+    divider.innerHTML = `<span data-type="${type}">${type}(${ownedCount}/${totalCount})</span>`;
   });
 }
 
