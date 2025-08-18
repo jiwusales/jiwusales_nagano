@@ -585,7 +585,8 @@ function renderCards(data, sheetName) {
     const totalCount = typeData.length;
 
     // ✅ 修改這裡，加上 type-count class
-    divider.innerHTML = `<span class="type-title">${type}</span><span class="type-count">(${ownedCount}/${totalCount})</span>`;
+    // 分類標題生成時
+    divider.innerHTML = `<span data-type="${type}">${type}(${ownedCount}/${totalCount})</span>`;
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
