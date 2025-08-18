@@ -586,7 +586,7 @@ function renderCards(data, sheetName) {
     const ownedCount = typeData.filter(item => collected.includes(`${sheetName}|${type}|${item.name}`)).length;
     const totalCount = typeData.length;
 
-    divider.innerHTML = `<span>${type}</span> <span class="type-count">(${ownedCount}/${totalCount})</span>`;
+    divider.innerHTML = `<span data-type="${type}">${type} (${ownedCount}/${totalCount})</span>`;
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
