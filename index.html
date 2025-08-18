@@ -586,7 +586,7 @@ function renderCards(data, sheetName) {
 
     // ✅ 修改這裡，加上 type-count class
     // 分類標題生成時
-    divider.innerHTML = `<span data-type="${type}">${type}(${ownedCount}/${totalCount})</span>`;
+    divider.innerHTML = `<span data-type="${type}">${type}<span class="type-count">(${ownedCount}/${totalCount})</span></span>`;
     cardContainer.appendChild(divider);
 
     const groupContainer = document.createElement("div");
@@ -639,8 +639,10 @@ function renderCards(data, sheetName) {
         if (divider) {
           const ownedCount = typeData.filter(item => collected.includes(`${sheetName}|${type}|${item.name}`)).length;
           const countSpan = divider.querySelector(".type-count");
-          if (countSpan) countSpan.textContent = `(${ownedCount}/${totalCount})`;
-        }
+if (countSpan) {
+  const ownedCount = typeData.filter(item => collected.includes(`${sheetName}|${type}|${item.name}`)).length;
+  countSpan.textContent = `(${ownedCount}/${totalCount})`;
+}
       });
 
       groupContainer.appendChild(card);
