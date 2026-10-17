@@ -1,0 +1,118 @@
+{
+  "version": "0.6",
+  "reqId": "0",
+  "status": "ok",
+  "sig": "917858881",
+  "table": {
+    "cols": [
+      {
+        "id": "A",
+        "label": "",
+        "type": "string"
+      },
+      {
+        "id": "B",
+        "label": "",
+        "type": "string"
+      },
+      {
+        "id": "C",
+        "label": "",
+        "type": "string"
+      },
+      {
+        "id": "D",
+        "label": "",
+        "type": "string"
+      },
+      {
+        "id": "E",
+        "label": "",
+        "type": "string"
+      },
+      {
+        "id": "F",
+        "label": "",
+        "type": "string"
+      },
+      {
+        "id": "G",
+        "label": "",
+        "type": "string"
+      }
+    ],
+    "rows": [
+      {"c":[{"v":"類型"},{"v":"名稱"},{"v":"貨號"},{"v":"圖片"},{"v":"網址"},{"v":"尺寸"},{"v":"日韓名"}]},
+      {"c":[{"v":"吊娃"},{"v":"基礎"},{"v":"4582662915008"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00332_48d22a3c.png"},{"v":"https://nagano-market.jp/products/4582662915008"},{"v":"100x70x50"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"小基礎"},{"v":"4571609407133"},{"v":"https://jiwusales.github.io/imgh/images_1350/tu-ceng-3_1d409e53.png"},{"v":"https://nagano-market.jp/collections/newitems/products/4571609407133"},{"v":"100x70x45"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"櫻花"},{"v":"4571609388722"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00640_912bc801.png"},{"v":"https://nagano-market.jp/products/4571609388722"},{"v":"115x85x50"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"雨衣"},{"v":"4571609365501"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00333_e8da6729.png"},{"v":"https://nagano-market.jp/products/4571609365501"},{"v":"135x130x80"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"生日"},{"v":"4571609385301"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00611_13a9e4d6.png"},{"v":"https://nagano-market.jp/products/4571609385301"},{"v":"140x90x60"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"Sanrio聯名"},{"v":"4550337961414"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00269_f716a3c5.png"},null,{"v":"110x120x55"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"萬聖節魔鬼"},{"v":"4571609342687"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00017_023c93a0.png"},{"v":"https://nagano-market.jp/products/4571609342687"},{"v":"120x75x50"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"趴趴"},{"v":"4582662964358"},{"v":"https://nagano-market.jp/cdn/shop/files/4582662964358_2.jpg?v=1696408077"},{"v":"https://nagano-market.jp/products/4582662964358"},{"v":"70x95x145"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"米其林"},{"v":"4582662988873"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00020_fbe63fd1.png"},{"v":"https://nagano-market.jp/products/4582662988873"},{"v":"120x95x80"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"米其林頭"},{"v":"4582662981058"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00019_cb95d435.png"},{"v":"https://nagano-market.jp/products/4582662981058"},{"v":"65x75x40"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"基礎鈴鐺吊飾"},{"v":"4582662989603"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00245_084fd711.png"},{"v":"https://nagano-market.jp/products/4582662989603"},{"v":"50x65x30"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"2026白熊E賞"},null,{"v":"https://media.app.slash.gift/public/cloudfront/images/nagano/ab8d1b94-f6d0-42fb-8761-f19e9b69df18.jpeg.800"},null,{"v":"85x95x60"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"黑熊E賞"},null,{"v":"https://media.app.slash.gift/public/cloudfront/images/nagano/7d78c9e3-d320-4abd-a0a2-32a20f90aa5b.jpeg.nop"},null,{"v":"85x85x60"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"茄子"},{"v":"4582662905740"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00265_8bec177d.png"},{"v":"https://nagano-market.jp/products/4582662905740"},{"v":"100x65x50"},{"v":null}]},
+      {"c":[{"v":"吊娃"},{"v":"自分基礎"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00494_4dde07ab.png"},null,{"v":"80x90x50"},{"v":"自分ツッコミくま　パグさん　マスコットキーチェーン"}]},
+      {"c":[{"v":"吊娃"},{"v":"自分服務生"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00495_1cb37ebb.png"},null,{"v":"100x75x55"},{"v":"自分ツッコミくま　カフェウェイター　パグさん　マスコットキーチェーン"}]},
+      {"c":[{"v":"娃"},{"v":"迷你基礎"},{"v":"4582662915145"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00334_64b9898b.png"},{"v":"https://nagano-market.jp/products/4582662915145"},{"v":"70x60x40"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"基礎S娃"},{"v":"4974475888936"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00081_9ddc5e7e.png"},{"v":"https://nagano-market.jp/products/4974475888936"},{"v":"160x140x90"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"手捧"},{"v":"4571609381044"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00593_df83257d.png"},{"v":"https://nagano-market.jp/products/4571609381044"},{"v":"75x65x45"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"揣手"},{"v":"4582662929586"},{"v":"https://nagano-market.jp/cdn/shop/products/4582662929586_1.jpg?v=1681700901"},{"v":"https://nagano-market.jp/products/4582662929586"},{"v":"110x90x60"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"米其林坐娃"},{"v":"4582662988903"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00083_7e6961c1.png"},{"v":"https://nagano-market.jp/products/4582662988903"},{"v":"180x150x120"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"兩用頸枕娃"},{"v":"4571609370802"},{"v":"https://nagano-market.jp/cdn/shop/files/4571609370802_1.jpg?v=1754361119&width=1100"},{"v":"https://nagano-market.jp/products/4571609370802"},{"v":"320x245x140"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"三麗鷗聯名S娃"},{"v":"4550337961353"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00270_6964d6c0.png"},null,{"v":"195x190x110"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"壽司螢幕掛娃"},{"v":"4582662975408"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00084_94a52bce.png"},{"v":"https://nagano-market.jp/products/4582662975408"},{"v":"140x85x110"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"新年達摩娃"},{"v":"4571609376354"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00369_88fec9ad.jpg"},{"v":"https://nagano-market.jp/products/4571609376354"},{"v":"155x155x160"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"蛇年土龍娃"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00395_74d4ee09.png"},null,{"v":"220x150x200"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"兔年娃"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00396_5aa7d13b.png"},null,{"v":"H170"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"迎春門松娃"},{"v":"4582662906617"},{"v":"https://nagano-market.jp/cdn/shop/files/4582662906617_1_590x.jpg?v=1702297503"},{"v":"https://nagano-market.jp/products/4582662906617"},{"v":"150x180x150"},{"v":null}]},
+      {"c":[{"v":"娃"},{"v":"自分基礎趴趴"},{"v":"4582402113619"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00496_3d6a13b8.png"},null,{"v":"80x65x100"},{"v":"自分ツッコミくま　ごろごろぬいぐるみ　（パグ）"}]},
+      {"c":[{"v":"娃"},{"v":"自分基礎S娃"},{"v":"4582402112872"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00497_44165ffd.png"},null,{"v":"220x150x100"},{"v":"自分ツッコミくま　パグさん　ぬいぐるみ"}]},
+      {"c":[{"v":"娃"},{"v":"自分服務生S娃"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00498_6eb86e6e.png"},null,{"v":"220x150x10"},{"v":"自分ツッコミくま　カフェウェイター　パグさん　ぬいぐるみ"}]},
+      {"c":[{"v":"娃"},{"v":"自分達摩"},{"v":"4570096601369"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00499_72960b74.png"},null,{"v":"160x160x160"},{"v":"自分ツッコミくま　だるまぬいぐるみ　（パグ）"}]},
+      {"c":[{"v":"其他"},{"v":"環保袋娃"},{"v":"4582662906648"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00112_8bf6aee7.png"},{"v":"https://nagano-market.jp/products/4582662906648"},{"v":"100x100x50"},{"v":null}]},
+      {"c":[{"v":"其他"},{"v":"Sanrio娃徽章"},{"v":"4550337961735"},{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00271_85709f3f.png"},null,{"v":"80x80x35"},{"v":null}]},
+      {"c":[{"v":"其他"},{"v":"長野展 特典娃徽章"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00406_b27fe9fe.png"},null,{"v":"70x70"},{"v":null}]},
+      {"c":[{"v":"扭蛋"},{"v":"趴娃"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00632_939a3e1e.png"},null,{"v":"W70"},{"v":null}]},
+      {"c":[{"v":"扭蛋"},{"v":"MINI基礎"},{"v":"4580045306238"},{"v":"https://jiwusales.github.io/imgh/images_1350/image_6ad6fbe3.png"},null,{"v":"H70"},{"v":"ナガノのくま ぬいぐるみmini"}]},
+      {"c":[{"v":"扭蛋"},{"v":"趴趴線套"},{"v":"4580045306252"},{"v":"https://jiwusales.github.io/imgh/images_1350/image_9d14e010.png"},null,{"v":"H30"},{"v":"ナガノのくま ケーブルカバー"}]},
+      {"c":[{"v":"景品"},{"v":"自分零錢包 基礎"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00459_6a0904ef.png"},null,{"v":"W80"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"自分迷你包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00471_3ebe5fd8.png"},null,{"v":"W100"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"迷你口金包 基礎"},null,{"v":"https://raw.githubusercontent.com/jiwusales/imgh/main/images/img_20260929032324_353541c0.png"},null,{"v":"H60"},{"v":"ナガノキャラクターズ ミニがまぐち"}]},
+      {"c":[{"v":"景品"},{"v":"大頭束口袋"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/tu-ceng-14_93676530.png"},null,{"v":"H120"},{"v":"ナガノキャラクターズ おかお巾着"}]},
+      {"c":[{"v":"景品"},{"v":"基礎"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00296_5aa9f18d.png"},null,{"v":"H110"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"QQ基礎大頭"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00409_27e96306.png"},null,{"v":"65x90"},{"v":"ナガノキャラクターズ もっちるフェイスマスコット"}]},
+      {"c":[{"v":"景品"},{"v":"基礎S"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00310_492749d8.png"},null,{"v":"H160"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"衝浪"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00283_03b14e34.png"},null,{"v":"H180"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"BIG害羞"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00311_a14fa5c1.png"},null,{"v":"H330"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"BIG生日"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00424_563c6f6f.png"},null,{"v":"H370"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"BIG元氣睡衣"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/tu-ceng-13_415d0f4c.png"},null,{"v":"H300"},{"v":"ナガノキャラクターズ パジャマで元気なBIGぬいぐるみ"}]},
+      {"c":[{"v":"景品"},{"v":"BIG趴娃②"},null,{"v":"https://raw.githubusercontent.com/jiwusales/imgh/main/images/img_20260929031846_ecd38335.png"},null,{"v":"W400"},{"v":"ナガノキャラクターズ もっちる ねそべりBIGぬいぐるみ②"}]},
+      {"c":[{"v":"景品"},{"v":"自分基礎坐墊"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00460_67fb7bbf.png"},null,{"v":"H450"},{"v":null}]},
+      {"c":[{"v":"景品"},{"v":"LAWSON②再抽賞"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/j00009_08e5d724.png"},null,{"v":"H110"},{"v":"自分ツッコミくまくじ第２弾"}]},
+      {"c":[{"v":"中"},{"v":"大頭娃徽章"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00356_39d08058.png"},null,{"v":"55x60"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"基礎娃徽章"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00232_e89d5e7c.png"},null,{"v":"90x70"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"趴趴娃徽章"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00357_173d08b4.png"},null,{"v":"65x80"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"站姿S娃"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00082_9cd11a12.png"},null,{"v":"200x150"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"抱枕"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00345_1ac4a560.png"},null,{"v":"280x300"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"頸枕"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00358_f9598c5d.png"},null,{"v":"300x300"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"毛絨證件套"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00166_622df3fa.png"},null,{"v":"130x80"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"毛絨零錢包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00346_150f9eb7.png"},null,{"v":"130x150"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"毛絨收納包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00347_41f93f2f.png"},null,{"v":"130x200"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"毛絨手提包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00359_4d147494.png"},null,{"v":"240x320"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"斜背毛絨包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00348_94fb1e30.png"},null,{"v":"160x180"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"斜背痛包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00132_3cd6e3d3.png"},null,{"v":"230x270"},{"v":null}]},
+      {"c":[{"v":"中"},{"v":"娃背包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00085_b6a3e1e4.png"},null,{"v":"H290"},{"v":null}]},
+      {"c":[{"v":"韓"},{"v":"基礎M娃"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00563_e933a1c9.png"},null,{"v":"300x180"},{"v":"담곰이 퍼그 인형 30cm 농담곰 M "}]},
+      {"c":[{"v":"韓"},{"v":"證件零錢包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00549_2db3fc88.png"},null,{"v":"120x140"},{"v":"담곰이 얼굴파우치 키링"}]},
+      {"c":[{"v":"韓"},{"v":"全身收納包"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00550_df7fe18c.png"},null,{"v":"160x120"},{"v":"담곰이 전신파우치"}]},
+      {"c":[{"v":"韓"},{"v":"基礎大頭抱枕"},null,{"v":"https://jiwusales.github.io/imgh/images_1350/ngn00564_d243b55e.png"},null,{"v":"350x400"},{"v":"담곰이 퍼그 얼굴 쿠션 농담곰 40cm"}]}
+    ],
+    "parsedNumHeaders": 0
+  }
+}
